@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    volumes:
+      - ../src:/app/src
+      - ./.env:/app/.env
+    environment:
+      NODE_ENV: test
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - "./init-scripts:/docker-entrypoint-initdb.d"
+    ports:
+      - "5433:5432"
+
+  e2e:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    volumes:
+      - ../src:/app/src
+      - ./.env:/app/.env
+    environment:
+      NODE_ENV: e2e
+    command: npm run test:e2e
+    depends_on:
+      - api

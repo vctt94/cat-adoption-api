@@ -10,5 +10,9 @@
     },
     "testRegex": "/e2e/.*\\.(e2e-test|e2e-spec).(ts|tsx|js)$",
     "collectCoverageFrom" : ["src/**/*.{js,jsx,tsx,ts}", "!**/node_modules/**", "!**/vendor/**"],
-    "coverageReporters": ["json", "lcov"]
+    "coverageReporters": ["json", "lcov"],
+    "moduleNameMapper": {
+        "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "rootDir": ".."
 }
